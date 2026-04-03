@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <base target="_self">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tribord Amure - Association de Voile et Régates en Nouvelle-Calédonie</title>
+    <meta name="description" content="Régater, partager, progresser – Tribord Amure en action">
+    <meta name="keywords" content="voile, régate, nouvelle calédonie, association, compétition nautique">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1e3a8a",
+                        secondary: "#1e40af",
+                        accent: "#f59e0b",
+                        ocean: "#06b6d4"
+                    },
+                    fontFamily: {
+                        sans: ['"Open Sans"', 'sans-serif'],
+                        heading: ['"Montserrat"', 'sans-serif']
+                    },
+                    animation: {
+                        'slide-in': 'slideIn 0.8s ease-out forwards',
+                        'fade-in': 'fadeIn 1.2s ease-out forwards',
+                        'slide-up': 'slideUp 1s ease-out forwards'
+                    },
+                    keyframes: {
+                        slideIn: {
+                            '0%': { transform: 'translateX(-100%)', opacity: '0' },
+                            '100%': { transform: 'translateX(0)', opacity: '1' }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(100%)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        .slide {position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 900ms ease;z-index:1}
+.slide.visible{opacity:1;z-index:2}
+.slide.appearing{opacity:1;z-index:3}
+.animate-delay-1 { animation-delay: 0.2s; }
+        .animate-delay-2 { animation-delay: 0.4s; }
+        .animate-delay-3 { animation-delay: 0.6s; }
+        
+        .carousel-indicators .indicator {
+            transition: all 0.3s ease;
+        }
+        
+        .carousel-indicators .indicator.active {
+            width: 2rem;
+            background-color: #f59e0b;
+        }
+        
+        /* Smooth scrolling */
+        html{scroll-behavior:auto}
+        
+        /* Active navigation state */
+        .nav-link.active {
+            color: #f59e0b;
+            font-weight: 600;
+        }
+    
+@media (prefers-reduced-motion: reduce){.slide{transition:none}}
+</style>
+
+<style>
+  html{scroll-behavior:auto}
+  :root{--reveal-distance:28px;--reveal-duration:700ms}
+  .reveal-base{opacity:0;transition:opacity var(--reveal-duration) ease,transform var(--reveal-duration) ease;will-change:transform,opacity}
+  .reveal-left{transform:translate3d(calc(var(--reveal-distance)*-1),0,0)}
+  .reveal-right{transform:translate3d(var(--reveal-distance),0,0)}
+  .reveal-up{transform:translate3d(0,var(--reveal-distance),0)}
+  .reveal-down{transform:translate3d(0,calc(var(--reveal-distance)*-1),0)}
+  .is-visible{opacity:1;transform:translate3d(0,0,0)}
+  /* Optional: nicer motion on images */
+  img.reveal-base{filter:saturate(90%);transition-property:opacity,transform,filter}
+  img.is-visible{filter:saturate(105%)}
+</style>
+
+
+<style>
+section.has-bg{
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+section.has-bg::before{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.55)),
+    var(--bg) center/cover no-repeat;
+  z-index:-1;
+  opacity:1;
+}
+section.has-bg h2, section.has-bg p, section.has-bg li, section.has-bg a{
+  color:#fff;
+}
+</style>
+
+
+<style>
+#ecole h3{
+  color:#fff;
+  font-weight:800;
+  line-height:1.2;
+  font-size:clamp(28px, 3.2vw, 40px);
+  margin-bottom:1rem;
+}
+#ecole p{ color:#fff; font-size:clamp(16px, 1.25vw, 19px); }
+#ecole .grid{ align-items:center; }
+#ecole .grid > div:first-child{ max-width:720px; }
+#ecole img{
+  width:100%;
+  max-width:520px;
+  border-radius:16px;
+  box-shadow:0 12px 30px rgba(0,0,0,.35);
+  margin-left:auto; margin-right:auto;
+}
+#ecole a{ color:#fff; }
+</style>
+
+
+<style>
+/* Notre association: lisibilité + taille cohérente */
+#association h3{
+  color:#fff;
+  font-weight:800;
+  line-height:1.2;
+  font-size:clamp(28px, 3.2vw, 40px);
+  margin-bottom:1rem;
+}
+#association p{ color:#fff; font-size:clamp(16px, 1.25vw, 19px); }
+#association .grid{ align-items:center; }
+#association .grid > div:first-child{ max-width:720px; }
+#association img{
+  width:100%;
+  max-width:520px;
+  border-radius:16px;
+  box-shadow:0 12px 30px rgba(0,0,0,.35);
+  margin-left:auto; margin-right:auto;
+}
+#association a{ color:#fff; }
+</style>
+
+
+<style>
+/* Garder les textes des cartes en foncé dans #regates malgré le fond sombre */
+#regates .bg-white, #regates .bg-white * { color:#111827 !important; } /* proche de gray-900 */
+#regates .bg-white p { color:#4b5563 !important; } /* proche de gray-600 */
+#regates .bg-white .text-gray-500 { color:#6b7280 !important; } /* gray-500 */
+</style>
+
+
+<style>
+footer.has-bg{ position:relative; isolation:isolate; overflow:hidden; }
+footer.has-bg::before{
+  content:""; position:absolute; inset:0;
+  background: var(--bg) center/cover no-repeat;
+  z-index:-1; opacity:1;
+}
+/* Texte sombre lisible sur fond clair */
+footer.has-bg, footer.has-bg *{ color:#1f2937 !important; } /* gray-800 */
+footer.has-bg h3, footer.has-bg h4{ color:#111827 !important; } /* gray-900 pour les titres */
+footer.has-bg .btn, footer.has-bg button{ color:#fff !important; } /* garder le bouton newsletter lisible */
+footer.has-bg input{ background:#ffffffcc; color:#111827; }
+</style>
+
+<style>
+/* ——— thin separators between sections ——— */
+hr.section-sep{border:0;height:1px;background:rgba(255,255,255,0.95);margin:0;}
+hr.footer-sep{border:0;height:1px;background:#000;margin:0;}
+</style>
+
+<!-- Contact section tweaks: closer columns + white, larger text (scoped) -->
+<style>
+/* Scope strictly to the #contact section to avoid side-effects */
+#contact, #contact .contact-info, #contact .contact-form { color:#ffffff; }
+
+#contact h2, #contact h3, #contact p, #contact li, #contact a, #contact label, #contact .lead {
+  color:#ffffff;
+}
+#contact h2 { font-size: clamp(28px, 3vw, 40px); }
+#contact h3, #contact .section-title { font-size: clamp(20px, 2vw, 26px); }
+#contact p, #contact li, #contact label { font-size: clamp(15px, 1.3vw, 18px); line-height:1.55; }
+
+/* Ensure form fields stay readable */
+#contact input, #contact select, #contact textarea {
+  background:#ffffff; color:#111111;
+}
+
+/* Pull the two columns closer together */
+#contact .grid, #contact .columns, #contact .contact-grid, #contact .contact-wrapper, #contact .row {
+  column-gap: 2rem !important;
+}
+
+/* On wide screens, enforce a neat two-column grid if not already present */
+@media (min-width: 1024px){
+  #contact .grid, #contact .columns, #contact .contact-grid, #contact .contact-wrapper, #contact .row {
+    display: grid;
+    grid-template-columns: minmax(320px, 1fr) minmax(460px, 1.1fr);
+    align-items: start;
+  }
+}
+
+/* Slight contrast boost on textured background */
+#contact .contact-info, #contact h2, #contact h3, #contact label, #contact p, #contact li {
+  text-shadow: 0 1px 2px rgba(0,0,0,.35);
+}
+</style>
+
+
+<style>
+/* ——— École de voile : lisibilité renforcée (scopé à #ecole) ——— */
+#ecole h3{
+  font-size: clamp(34px, 3.8vw, 52px) !important;
+  color: #ffffff !important;
+  line-height: 1.25;
+  letter-spacing: 0.2px;
+}
+#ecole h4{
+  font-size: clamp(18px, 1.7vw, 24px) !important;
+  color: #ffffff !important;
+}
+#ecole p, #ecole li{
+  font-size: clamp(18px, 1.6vw, 22px) !important;
+  color: #ffffff !important;
+  line-height: 1.6;
+}
+/* Forcer les utilitaires Tailwind gris à passer en blanc uniquement dans #ecole */
+#ecole .text-gray-600, #ecole .text-gray-700, #ecole .text-gray-800{ color:#ffffff !important; }
+/* Légère ombre pour la lecture sur fond texturé */
+#ecole h3, #ecole h4, #ecole p, #ecole li{ text-shadow: 0 2px 3px rgba(0,0,0,.35); }
+/* Icônes un peu plus visibles */
+#ecole .fa-check-circle{ filter: drop-shadow(0 1px 2px rgba(0,0,0,.45)); }
+</style>
+
+
+<style id="ecoletune-xl">
+/* Amplification lecture – DÉCOUVERTE/ÉCOLE (#ecole) */
+#ecole h3{
+  font-size: clamp(42px, 5.2vw, 64px) !important;
+  letter-spacing: 0.2px;
+}
+#ecole p,
+#ecole li{
+  font-size: clamp(20px, 2.0vw, 26px) !important;
+  line-height: 1.7 !important;
+}
+#ecole ul{ margin-top: .5rem; }
+#ecole li{ margin-left: 1.15rem !important; margin-bottom: .45rem !important; }
+#ecole .btn, #ecole a[role="button"], #ecole .btn-primary{
+  font-size: clamp(17px, 1.25vw, 20px) !important;
+  padding: .9rem 1.25rem !important;
+}
+/* Renforce légèrement l’ombre du texte pour le fond carte */
+#ecole h3, #ecole p, #ecole li{ text-shadow: 0 2px 4px rgba(0,0,0,.45) !important; }
+</style>
+</head>
+<body class="font-sans bg-gray-50 text-gray-800">
+    <!-- Header -->
+    <header class="bg-white shadow-md animate-slide-in fixed w-full top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <img src="images/Logo.png" alt="Équipage en navigation – Voile NC" class="h-16 w-16 rounded-full">
+                    <div class="ml-4">
+                        <h1 class="text-2xl font-heading font-bold text-primary">Tribord Amure</h1>
+                        <p class="text-sm text-gray-600">Association de Voile et Régates en Nouvelle-Calédonie</p>
+                    </div>
+                </div>
+                
+                <nav class="hidden md:block">
+                    <ul class="flex space-x-8">
+                        <li><a href="#accueil" class="nav-link font-medium text-gray-700 hover:text-accent transition-colors active">Accueil</a></li>
+                        <li><a href="#association" class="nav-link font-medium text-gray-700 hover:text-accent transition-colors">L'association</a></li>
+                        <li><a href="#regates" class="nav-link font-medium text-gray-700 hover:text-accent transition-colors">Régates</a></li>
+                        <li><a href="#ecole" class="nav-link font-medium text-gray-700 hover:text-accent transition-colors">Découverte de la voile</a></li>
+                        <li><a href="#contact" class="nav-link font-medium text-gray-700 hover:text-accent transition-colors">Contact</a></li>
+                    </ul>
+                </nav>
+                
+                <button class="md:hidden text-gray-700">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section with Carousel -->
+    <section id="accueil" class="relative overflow-hidden h-screen pt-16">
+        <!-- Carousel Slides -->
+        <div class="relative h-full">
+            <!-- Slide 1 -->
+            <div class="slide visible absolute inset-0 bg-gradient-to-r from-primary to-secondary">
+                <div class="absolute inset-0 bg-black opacity-40"></div>
+                <img src="images/image1.jpg" alt="Coucher de soleil en mer - Voile NC" class="w-full h-full object-cover" loading="eager">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="container mx-auto px-4 relative z-10">
+                        <div class="max-w-2xl">
+                            <h2 class="text-4xl md:text-5xl font-heading font-bold mb-6 text-white animate-fade-in">La passion de la voile en Nouvelle-Calédonie</h2>
+                            <p class="text-xl mb-8 text-white opacity-90 animate-fade-in animate-delay-1">Rejoignez notre association et participez aux plus belles régates de Nouvelle Calédonie.</p>
+                            <div class="flex flex-wrap gap-4 animate-fade-in animate-delay-2">
+                                <a href="#association" class="bg-accent hover:bg-yellow-600 text-white font-bold py-3 px-6 rounded-lg transition-colors">Adhérer à l'association</a>
+                                <a href="#regates" class="bg-transparent hover:bg-white hover:text-primary border-2 border-white text-white font-bold py-3 px-6 rounded-lg transition-colors">Calendrier des régates</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Slide 2 -->
+            <div class="slide absolute inset-0 bg-gradient-to-r from-blue-900 to-blue-700">
+                <div class="absolute inset-0 bg-black opacity-30"></div>
+                <img src="images/image2.jpg" alt="Flotte de voiliers en régate - Voile NC" class="w-full h-full object-cover">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="container mx-auto px-4 relative z-10">
+                        <div class="max-w-2xl text-center">
+                            <h2 class="text-4xl md:text-5xl font-heading font-bold mb-6 text-white">Naviguez dans le plus beau lagon du monde</h2>
+                            <p class="text-xl mb-8 text-white opacity-90">Découvrez des paysages exceptionnels classés au patrimoine mondial de l'UNESCO.</p>
+                            <a href="#ecole" class="inline-block bg-accent hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-lg transition-colors">Découvrir le lagon</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Slide 3 -->
+            <div class="slide absolute inset-0 bg-gradient-to-r from-cyan-900 to-cyan-700">
+                <div class="absolute inset-0 bg-black opacity-25"></div>
+                <img src="images/image3.jpg" alt="Voilier sous spi bleu (photo illustrative)" class="w-full h-full object-cover">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="container mx-auto px-4 relative z-10">
+                        <div class="max-w-2xl text-right">
+                            <h2 class="text-4xl md:text-5xl font-heading font-bold mb-6 text-white">Initiation à la voile</h2>
+                            <p class="text-xl mb-8 text-white opacity-90">Envie de sensations fortes en régate ou de simple sortie paisible sur le lagon ?</p>
+                            <a href="#ecole" class="inline-block bg-accent hover:bg-yellow-600 text-white font-bold py-3 px-8 rounded-lg transition-colors">Nos activités</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Carousel Controls -->
+        <button class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-colors z-20 carousel-prev">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-3 rounded-full transition-colors z-20 carousel-next">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        
+        <!-- Carousel Indicators -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20 carousel-indicators">
+            <button class="indicator w-3 h-3 bg-white/50 rounded-full transition-all duration-300 active"></button>
+            <button class="indicator w-3 h-3 bg-white/50 rounded-full transition-all duration-300"></button>
+            <button class="indicator w-3 h-3 bg-white/50 rounded-full transition-all duration-300"></button>
+        </div>
+    </section>
+<hr class="section-sep">
+
+    <!-- Main Content -->
+    <main>
+        <!-- About Section -->
+        <section id="association" class="py-16 bg-white animate-slide-up mt-16 has-bg" style="--bg: url('images/background3.png');">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-heading font-bold text-primary mb-4">Notre association</h2>
+                    <div class="w-24 h-1 bg-accent mx-auto"></div>
+                </div>
+                
+                <div data-reveal-group class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h3 class="text-2xl font-heading font-semibold mb-4">Découvrir la voile en Nouvelle-Calédonie</h3>
+                        <p class="mb-4">Fondée en 2016, notre association rassemble les passionnés de voile. Nous participons aux régates, effectuons des sorties à la découverte du lagon et proposons des événements pour faire découvrir les joies de la navigation.</p>
+                        <p class="mb-6">Notre association est situé à Nouméa, au cœur du lagon classé au patrimoine mondial de l'UNESCO, offrant des conditions de navigation exceptionnelles.</p>
+                        <a href="#contact" class="inline-block bg-primary hover:bg-blue-900 text-white font-bold py-2 px-6 rounded-lg transition-colors">Nous rejoindre</a>
+                    </div>
+                    <div>
+                        <img src="images/image4.png" alt="Équipage — Notre association" class="w-full rounded-lg shadow-xl" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+<hr class="section-sep">
+
+        <!-- Regattas Section -->
+        <section id="regates" class="py-16 bg-gray-100 has-bg" style="--bg: url('images/background5.png');">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-heading font-bold text-primary mb-4">Nos régates</h2>
+                    <div class="w-24 h-1 bg-accent mx-auto"></div>
+                </div>
+                
+                <div data-reveal-group class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                        <img src="images/image5.jpg" alt="Régates en Nouvelle-Calédonie" class="w-full h-48 object-cover" loading="lazy">
+                        <div class="p-6">
+                            <h3 class="text-xl font-heading font-semibold mb-2">Challenge Croiseurs SYRIUS SOLAR</h3>
+                            <p class="text-gray-600 mb-4">Le Cercle Nautique Calédonien organise de février à octobre son challenge régates croiseurs SYRIUS SOLAR, saison 2025 !Parcours côtier ou technique, l'objectif …</p>
+                            <div class="flex items-center text-sm text-gray-500 mb-4">
+                                <i class="fas fa-calendar-alt mr-2"></i>
+                                <span>Du 15 février au 1e novembre 2025</span>
+                            </div>
+                            <!--<a href="#contact" class="text-accent font-semibold hover:underline">S'inscrire</a> -->
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                        <img src="images/image6.jpg" alt="Régates en Nouvelle-Calédonie" class="w-full h-48 object-cover" loading="lazy">
+                        <div class="p-6">
+                            <h3 class="text-xl font-heading font-semibold mb-2">Challenge Croiseurs en double SYRIUS SOLAR </h3>
+                            <p class="text-gray-600 mb-4">Le Cercle Nautique Calédonien organise de février à octobre son Challenge Croiseurs en double SYRIUS SOLAR 2025 …</p>
+                            <div class="flex items-center text-sm text-gray-500 mb-4">
+                                <i class="fas fa-calendar-alt mr-2"></i>
+                                <span>Du 16 février au 2 novembre 2025</span>
+                            </div>
+                            <!--<a href="#contact" class="text-accent font-semibold hover:underline">S'inscrire</a>-->
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden transform hover:scale-105 transition-transform duration-300">
+                        <img src="images/image7.jpg" alt="Régates en Nouvelle-Calédonie" class="w-full h-48 object-cover" loading="lazy">
+                        <div class="p-6">
+                            <h3 class="text-xl font-heading font-semibold mb-2">Toutes Voiles Dehors</h3>
+                            <p class="text-gray-600 mb-4">Afin de fêter la fin de la saison des régates, le Cercle Nautique Calédonien organise sa traditionnelle parade nautique ouverte à tous, dans les baies de …</p>
+                            <div class="flex items-center text-sm text-gray-500 mb-4">
+                                <i class="fas fa-calendar-alt mr-2"></i>
+                                <span>25 octobre 2025</span>
+                            </div>
+                            <!--<a href="#contact" class="text-accent font-semibold hover:underline">S'inscrire</a>-->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-12">
+                    <a class="inline-block bg-primary hover:bg-blue-900 text-white font-bold py-3 px-8 rounded-lg transition-colors" href="https://cnc.asso.nc/evenements/2025?filtre=voile" target="_blank" rel="noopener"> Événements 2025 </a>
+                </div>
+            </div>
+        </section>
+<hr class="section-sep">
+
+        <!-- Sailing School Section -->
+        <section id="ecole" class="py-16 bg-white has-bg" style="--bg: url('images/background2.png');">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-heading font-bold text-primary mb-4">Découverte de la voile</h2>
+                    <div class="w-24 h-1 bg-accent mx-auto"></div>
+                </div>
+                
+                <div data-reveal-group class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="order-1 md:order-2">
+                        <h3 class="text-2xl font-heading font-semibold mb-4">Pour tous les niveaux</h3>
+                        <p class="mb-4">Débutant ou confirmé vous souhaitez découvrir la voile</p>
+                        
+                        <div class="space-y-4 mb-6">
+                            <div class="flex items-start">
+                                <i class="fas fa-check-circle text-accent mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-semibold">Régates du mercredi</h4>
+                                    <p class="text-gray-600 text-sm">A bord du Tiaki Koe ou du KZ7</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-check-circle text-accent mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-semibold">Mode sportif avec les régates</h4>
+                                    <p class="text-gray-600 text-sm">Initiation et participation à des régates</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-check-circle text-accent mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-semibold">Sortie journée en week-end sur le lagon</h4>
+                                    <p class="text-gray-600 text-sm">Envie d'un pic nic sur le lagon ou de PMT autour d'un ilot ou récif</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <a href="#contact" class="inline-block bg-primary hover:bg-blue-900 text-white font-bold py-2 px-6 rounded-lg transition-colors">Demande d'informations</a>
+                    </div>
+                    
+                    <div class="order-2 md:order-1">
+                        <img src="images/4.jpg" alt="Tiaki Koe — École de voile" class="w-full rounded-lg shadow-xl" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+<hr class="section-sep">
+
+        <!-- Testimonials Section -->
+        
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-16 bg-white has-bg" style="--bg: url('images/background5.png');">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-heading font-bold text-primary mb-4">Nous contacter</h2>
+                    <div class="w-24 h-1 bg-accent mx-auto"></div>
+                </div>
+                
+                <div data-reveal-group class="grid md:grid-cols-2 gap-12">
+                    <div>
+                        <h3 class="text-2xl font-heading font-semibold mb-6">Informations</h3>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <i class="fas fa-map-marker-alt text-accent mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold">Adresse</h4>
+                                    <p class="text-gray-600">CNC Ponton P5, Nouméa<br>Nouvelle-Calédonie</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <i class="fas fa-phone-alt text-accent mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold">Téléphone</h4>
+                                    <p class="text-gray-600">+687 76 20 17</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <i class="fas fa-envelope text-accent mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold">Email</h4>
+                                    <p class="text-gray-600">bossis.erwan@gmail.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <i class="fas fa-clock text-accent mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="font-semibold">Horaires</h4>
+                                    <p class="text-gray-600">Mercredi: 16h30-19h<br>Samedi: 8h-19h<br>Dimanche: 8h-19h</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h4 class="font-semibold mb-4">Suivez-nous</h4>
+                            <div class="flex space-x-4">
+                                <a href="#" class="text-primary hover:text-accent text-2xl"><i class="fab fa-facebook"></i></a>
+                                <a href="#" class="text-primary hover:text-accent text-2xl"><i class="fab fa-instagram"></i></a>
+                                <a href="#" class="text-primary hover:text-accent text-2xl"><i class="fab fa-youtube"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-2xl font-heading font-semibold mb-6">Formulaire de contact</h3>
+                        
+                        <form class="space-y-4">
+                            <div>
+                                <label for="name" class="block text-gray-700 font-medium mb-1">Nom complet</label>
+                                <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
+                            </div>
+                            
+                            <div>
+                                <label for="email" class="block text-gray-700 font-medium mb-1">Email</label>
+                                <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
+                            </div>
+                            
+                            <div>
+                                <label for="subject" class="block text-gray-700 font-medium mb-1">Sujet</label>
+                                <select id="subject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
+                                    <option value="">Sélectionnez un sujet</option>
+                                    <option value="membership">Adhésion</option>
+                                    <option value="regatta">Régates</option>
+                                    <option value="school">Initiation découverte voile</option>
+									<option value="school">Evènement</option>
+									<option value="school">Sortie cohésion</option>
+                                    <option value="other">Autre</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="message" class="block text-gray-700 font-medium mb-1">Message</label>
+                                <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"></textarea>
+                            </div>
+                            
+                            <button type="submit" class="bg-primary hover:bg-blue-900 text-white font-bold py-3 px-6 rounded-lg transition-colors">Envoyer le message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+<hr class="footer-sep">
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-12 has-bg" style="--bg: url('images/background5.png');">
+        <div class="container mx-auto px-4">
+            <div data-reveal-group class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-heading font-bold mb-4">Tribord Amure</h3>
+                    <p class="mb-4">Association de Voile et Régates en Nouvelle-Calédonie depuis 2016.</p>
+                    <img src="images/Logo.png" alt="Logo Tiaki Koe" class="h-16 w-16 rounded-full mt-2">
+                </div>
+                
+                <div>
+                    <h4 class="font-heading font-semibold mb-4">Navigation</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#accueil" class="hover:text-accent transition-colors">Accueil</a></li>
+                        <li><a href="#association" class="hover:text-accent transition-colors">L'association</a></li>
+                        <li><a href="#regates" class="hover:text-accent transition-colors">Régates</a></li>
+                        <li><a href="#ecole" class="hover:text-accent transition-colors">Découverte de la voile</a></li>
+                        <li><a href="#contact" class="hover:text-accent transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-heading font-semibold mb-4">Régates</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#regates" class="hover:text-accent transition-colors">Calendrier</a></li>
+                        <li><a href="#regates" class="hover:text-accent transition-colors">Résultats</a></li>
+                        <li><a href="#contact" class="hover:text-accent transition-colors">Inscriptions</a></li>
+                        <li><a href="#regates" class="hover:text-accent transition-colors">Règlements</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-heading font-semibold mb-4">Newsletter</h4>
+                    <p class="mb-4">Abonnez-vous pour recevoir nos actualités et les prochains événements.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Votre email" class="px-4 py-2 text-gray-800 rounded-l-lg w-full focus:outline-none">
+                        <button type="submit" class="bg-accent hover:bg-yellow-600 px-4 rounded-r-lg"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-blue-800 mt-12 pt-8 text-sm text-center">
+                <p>&copy; Association Tribord Amure - Tous droits réservés</p>
+                <div class="mt-2">
+                    <a href="#" class="hover:text-accent transition-colors mx-2">Mentions légales</a>
+                    <a href="#" class="hover:text-accent transition-colors mx-2">Politique de confidentialité</a>
+                    <a href="#" class="hover:text-accent transition-colors mx-2">CGU</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    
+<script>
+// --- Carousel: overlay fade-in, autoplay ON ---
+
+// --- Carousel (hardfix) injected below ---
+
+// --- Carousel (hardfix) ---
+(function(){
+  const root = document.getElementById('accueil');
+  if (!root) return;
+  const slides = Array.from(root.querySelectorAll('.slide'));
+  const indicators = Array.from(document.querySelectorAll('.carousel-indicators .indicator'));
+  const nextBtn = document.querySelector('.carousel-next');
+  const prevBtn = document.querySelector('.carousel-prev');
+  if (slides.length <= 1) return;
+
+  let current = 0;
+  const appearDuration = 900;
+  const holdTime = 2600;
+  let timer = null, kick = null;
+
+  // Init state
+  slides.forEach((s,i)=>{
+    s.classList.remove('appearing','visible');
+    if (i === 0) s.classList.add('visible');
+  });
+  function setActiveDot(i){
+    indicators.forEach((d,idx)=> d.classList.toggle('active', idx===i));
+  }
+  setActiveDot(0);
+
+  function goTo(i){
+    if (i === current || i < 0 || i >= slides.length) return;
+    const prev = slides[current];
+    const next = slides[i];
+    next.classList.add('appearing'); // fade-in above
+
+    setTimeout(()=>{
+      next.classList.remove('appearing');
+      next.classList.add('visible');
+
+      prev.classList.remove('visible');
+      // instant hide prev without leaving inline opacity stuck
+      const oldTransition = prev.style.transition;
+      prev.style.transition = 'none';
+      prev.style.opacity = '0';
+      void prev.offsetHeight;
+      prev.style.transition = oldTransition || '';
+      prev.style.opacity = '';
+
+      current = i;
+      setActiveDot(current);
+    }, appearDuration);
+  }
+
+  function next(){ goTo((current + 1) % slides.length); }
+  function prev(){ goTo((current - 1 + slides.length) % slides.length); }
+
+  function start(){
+    stop();
+    kick = setTimeout(next, holdTime); // first change
+    timer = setInterval(next, holdTime + appearDuration);
+  }
+  function stop(){
+    if (timer) { clearInterval(timer); timer = null; }
+    if (kick) { clearTimeout(kick); kick = null; }
+  }
+
+  // Controls
+  nextBtn && nextBtn.addEventListener('click', ()=>{ next(); start(); });
+  prevBtn && prevBtn.addEventListener('click', ()=>{ prev(); start(); });
+  indicators.forEach((dot, idx)=> dot.addEventListener('click', ()=>{ goTo(idx); start(); }));
+
+  // Autoplay
+  start();
+})();
+
+// --- Navigation: native smooth + header offset, zero jitter ---
+
+class Navigation {
+  constructor(){
+    this.header = document.querySelector('header');
+    this.sections = document.querySelectorAll('section[id]');
+    this.links = document.querySelectorAll('a[href^="#"]');
+    this.init();
+  }
+  init(){
+    this.applyScrollMargin();
+    window.addEventListener('resize', ()=> this.applyScrollMargin());
+    this.bind();
+    this.observeActive();
+  }
+  applyScrollMargin(){
+    const offset = this.header ? (this.header.offsetHeight || 0) : 0;
+    this.sections.forEach(s => s.style.scrollMarginTop = (offset + 8) + 'px');
+  }
+  bind(){
+    const duration = 1200; // ms: slower and smoother
+    const easeInOutCubic = t => t<0.5 ? 4*t*t*t : 1 - Math.pow(-2*t+2,3)/2;
+    const topFor = el => el.getBoundingClientRect().top + window.scrollY - (this.header ? this.header.offsetHeight : 0) - 8;
+    const animateTo = y => {
+      const startY = window.scrollY || window.pageYOffset;
+      const delta = y - startY;
+      const start = performance.now();
+      const step = now => {
+        const t = Math.min(1, (now - start) / duration);
+        const e = easeInOutCubic(t);
+        window.scrollTo(0, startY + delta * e);
+        if (t < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    this.links.forEach(a => {
+      a.addEventListener('click', e => {
+        const href = a.getAttribute('href') || '';
+        if (!href.startsWith('#')) return;
+        const target = document.querySelector(href);
+        if (!target) return;
+        e.preventDefault();
+        animateTo(topFor(target));
+      });
+    });
+  }
+  observeActive(){
+    const navLinks = document.querySelectorAll('.nav-link');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if (entry.isIntersecting){
+          const id = entry.target.id;
+          navLinks.forEach(a => {
+            if (a.getAttribute('href') === '#' + id) a.classList.add('active');
+            else a.classList.remove('active');
+          });
+        }
+      });
+    }, { threshold: 0.6 });
+    this.sections.forEach(sec=> io.observe(sec));
+  }
+}
+
+// --- Boot ---
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  new HeroCarousel();
+  new Navigation();
+});
+</script>
+
+
+<script>
+// Set scroll-margin-top so sections land under the fixed header
+(function(){
+  const header = document.querySelector('header');
+  const sections = document.querySelectorAll('section[id]');
+  function applyOffset(){
+    const offset = header ? (header.offsetHeight || 0) : 0;
+    sections.forEach(s => { s.style.scrollMarginTop = (offset + 8) + 'px'; });
+  }
+  applyOffset();
+  window.addEventListener('resize', applyOffset);
+})();
+</script>
+
+
+<script>
+// Single smooth scroller (1200ms) with header offset – avoids stutter.
+(function(){
+  if (window.__smoothNavBound) return; window.__smoothNavBound = true;
+  const header=document.querySelector('header');
+  const duration=1200;
+  const ease=t=>t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+  const topFor=el=>el.getBoundingClientRect().top+window.scrollY-(header?header.offsetHeight:0)-8;
+  const animateTo=y=>{const s=window.scrollY,d=y-s,a=performance.now();const step=n=>{const t=Math.min(1,(n-a)/duration);window.scrollTo(0,s+d*ease(t));if(t<1)requestAnimationFrame(step)};requestAnimationFrame(step)};
+  document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const id=a.getAttribute('href');if(!id||id==='#')return;const el=document.querySelector(id);if(!el)return;e.preventDefault();animateTo(topFor(el));}));
+})();
+</script>
+
+</body>
+</html>

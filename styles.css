@@ -1,0 +1,91 @@
+/* Carousel slides visibility */
+.slide {position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 900ms ease;z-index:1}
+.slide.visible{opacity:1;z-index:2}
+.slide.appearing{opacity:1;z-index:3}
+.animate-delay-1 { animation-delay: 0.2s; }
+.animate-delay-2 { animation-delay: 0.4s; }
+.animate-delay-3 { animation-delay: 0.6s; }
+
+.carousel-indicators .indicator { transition: all 0.3s ease; }
+.carousel-indicators .indicator.active { width: 2rem; background-color: #f59e0b; }
+
+/* Smooth scrolling (we keep custom JS for smoother behavior) */
+html{scroll-behavior:auto}
+
+.nav-link.active { color: #f59e0b; font-weight: 600; }
+
+@media (prefers-reduced-motion: reduce){.slide{transition:none}}
+
+/* reveal helpers */
+:root{--reveal-distance:28px;--reveal-duration:700ms}
+.reveal-base{opacity:0;transition:opacity var(--reveal-duration) ease,transform var(--reveal-duration) ease;will-change:transform,opacity}
+.reveal-left{transform:translate3d(calc(var(--reveal-distance)*-1),0,0)}
+.reveal-right{transform:translate3d(var(--reveal-distance),0,0)}
+.reveal-up{transform:translate3d(0,var(--reveal-distance),0)}
+.reveal-down{transform:translate3d(0,calc(var(--reveal-distance)*-1),0)}
+.is-visible{opacity:1;transform:translate3d(0,0,0)}
+img.reveal-base{filter:saturate(90%);transition-property:opacity,transform,filter}
+img.is-visible{filter:saturate(105%)}
+
+/* background helper for sections */
+section.has-bg{ position: relative; isolation: isolate; overflow: hidden; }
+section.has-bg::before{
+  content:"";
+  position:absolute; inset:0;
+  background:
+    linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.55)),
+    var(--bg) center/cover no-repeat;
+  z-index:-1;
+  opacity:1;
+}
+section.has-bg h2, section.has-bg p, section.has-bg li, section.has-bg a{ color:#fff; }
+
+/* ecole */
+#ecole h3{ color:#fff; font-weight:800; line-height:1.2; font-size:clamp(28px, 3.2vw, 40px); margin-bottom:1rem; }
+#ecole p{ color:#fff; font-size:clamp(16px, 1.25vw, 19px); }
+#ecole .grid{ align-items:center; }
+#ecole .grid > div:first-child{ max-width:720px; }
+#ecole img{ width:100%; max-width:520px; border-radius:16px; box-shadow:0 12px 30px rgba(0,0,0,.35); margin-left:auto; margin-right:auto; }
+#ecole a{ color:#fff; }
+
+/* association */
+#association h3{ color:#fff; font-weight:800; line-height:1.2; font-size:clamp(28px, 3.2vw, 40px); margin-bottom:1rem; }
+#association p{ color:#fff; font-size:clamp(16px, 1.25vw, 19px); }
+#association .grid{ align-items:center; }
+#association .grid > div:first-child{ max-width:720px; }
+#association img{ width:100%; max-width:520px; border-radius:16px; box-shadow:0 12px 30px rgba(0,0,0,.35); margin-left:auto; margin-right:auto; }
+#association a{ color:#fff; }
+
+/* keep regatta cards text dark */
+#regates .bg-white, #regates .bg-white * { color:#111827 !important; }
+#regates .bg-white p { color:#4b5563 !important; }
+#regates .bg-white .text-gray-500 { color:#6b7280 !important; }
+
+/* footer with background */
+footer.has-bg{ position:relative; isolation:isolate; overflow:hidden; }
+footer.has-bg::before{ content:""; position:absolute; inset:0; background: var(--bg) center/cover no-repeat; z-index:-1; opacity:1; }
+footer.has-bg, footer.has-bg *{ color:#1f2937 !important; }
+footer.has-bg h3, footer.has-bg h4{ color:#111827 !important; }
+footer.has-bg .btn, footer.has-bg button{ color:#fff !important; }
+footer.has-bg input{ background:#ffffffcc; color:#111827; }
+
+/* thin separators */
+hr.section-sep{border:0;height:1px;background:rgba(255,255,255,0.95);margin:0;}
+hr.footer-sep{border:0;height:1px;background:#000;margin:0;}
+
+/* contact tweaks (scoped) */
+#contact, #contact .contact-info, #contact .contact-form { color:#ffffff; }
+#contact h2, #contact h3, #contact p, #contact li, #contact a, #contact label, #contact .lead { color:#ffffff; }
+#contact h2 { font-size: clamp(28px, 3vw, 40px); }
+#contact h3, #contact .section-title { font-size: clamp(20px, 2vw, 26px); }
+#contact p, #contact li, #contact label { font-size: clamp(15px, 1.3vw, 18px); line-height:1.55; }
+#contact input, #contact select, #contact textarea { background:#ffffff; color:#111111; }
+#contact .grid, #contact .columns, #contact .contact-grid, #contact .contact-wrapper, #contact .row { column-gap: 2rem !important; }
+@media (min-width: 1024px){
+  #contact .grid, #contact .columns, #contact .contact-grid, #contact .contact-wrapper, #contact .row {
+    display: grid;
+    grid-template-columns: minmax(320px, 1fr) minmax(460px, 1.1fr);
+    align-items: start;
+  }
+}
+#contact .contact-info, #contact h2, #contact h3, #contact label, #contact p, #contact li { text-shadow: 0 1px 2px rgba(0,0,0,.35); }
