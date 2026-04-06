@@ -174,3 +174,189 @@ document.addEventListener('DOMContentLoaded', ()=>{
     if (!menu.classList.contains('hidden')) toggle();
   }));
 })();
+// ===== Galerie Tribord Amure : filtres + lightbox =====
+(function () {
+  const grid = document.querySelector('.gallery-grid');
+  if (!grid) return;
+
+  const items = Array.from(grid.querySelectorAll('.gallery-item'));
+  const filters = Array.from(document.querySelectorAll('.gallery-filter'));
+  const lightbox = document.getElementById('gallery-lightbox');
+  const lightboxImg = document.getElementById('lightbox-image');
+  const videoWrapper = document.getElementById('lightbox-video-wrapper');
+  const closeBtn = lightbox ? lightbox.querySelector('.gallery-lightbox-close') : null;
+
+  // --- Filtres (Tout / Photos / Vidéos)
+  filters.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter || 'all';
+      filters.forEach(b => b.classList.toggle('active', b === btn));
+
+      items.forEach(item => {
+        const type = item.dataset.type || 'photo';
+        const show = filter === 'all' || filter === type;
+        item.classList.toggle('is-hidden', !show);
+      });
+    });
+  });
+
+  // --- Ouverture lightbox
+  const openLightboxPhoto = src => {
+    if (!lightbox) return;
+    videoWrapper.innerHTML = '';
+    videoWrapper.classList.add('hidden');
+
+    lightboxImg.src = src;
+    lightboxImg.classList.remove('hidden');
+
+    lightbox.classList.remove('hidden');
+  };
+
+  const openLightboxVideo = src => {
+    if (!lightbox) return;
+    lightboxImg.classList.add('hidden');
+    lightboxImg.src = '';
+
+    videoWrapper.innerHTML = '';
+
+    // vidéo locale .mp4 ou iframe externe
+    if (src.endsWith('.mp4')) {
+      const vid = document.createElement('video');
+      vid.src = src;
+      vid.controls = true;
+      vid.autoplay = true;
+      videoWrapper.appendChild(vid);
+    } else {
+      const iframe = document.createElement('iframe');
+      iframe.src = src;
+      iframe.allowFullscreen = true;
+      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+      videoWrapper.appendChild(iframe);
+    }
+
+    videoWrapper.classList.remove('hidden');
+    lightbox.classList.remove('hidden');
+  };
+
+  items.forEach(item => {
+    item.addEventListener('click', () => {
+      const type = item.dataset.type || 'photo';
+
+      if (type === 'video') {
+        const src = item.dataset.videoSrc;
+        if (src) openLightboxVideo(src);
+      } else {
+        const img = item.querySelector('img');
+        if (img && img.src) openLightboxPhoto(img.src);
+      }
+    });
+  });
+
+  // --- Fermeture lightbox
+  const closeLightbox = () => {
+    if (!lightbox) return;
+    lightbox.classList.add('hidden');
+    lightboxImg.src = '';
+    videoWrapper.innerHTML = '';
+  };
+
+  closeBtn && closeBtn.addEventListener('click', closeLightbox);
+  lightbox && lightbox.addEventListener('click', e => {
+    if (e.target === lightbox || e.target.classList.contains('gallery-lightbox-backdrop')) {
+      closeLightbox();
+    }
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !lightbox.classList.contains('hidden')) {
+      closeLightbox();
+    }
+  });
+})();
+// ===== Galerie : filtres & lightbox =====
+(function () {
+  const section = document.getElementById('galerie');
+  if (!section) return;
+
+  const items = Array.from(section.querySelectorAll('.gallery-item'));
+  const filters = Array.from(section.querySelectorAll('.gallery-filter'));
+
+  const lightbox = document.getElementById('galleryLightbox');
+  const imgEl = document.getElementById('galleryLightboxImage');
+  const videoWrap = document.getElementById('galleryLightboxVideo');
+  const closeBtn = lightbox.querySelector('.gallery-lightbox-close');
+  const backdrop = lightbox.querySelector('.gallery-lightbox-backdrop');
+
+  // --- Filtres (Tout / Photos / Vidéos)
+  filters.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const filter = btn.dataset.filter || 'all';
+      filters.forEach(b => b.classList.toggle('active', b === btn));
+
+      items.forEach(item => {
+        const type = item.dataset.type || 'photo';
+        const show = filter === 'all' || filter === type;
+        item.classList.toggle('is-hidden', !show);
+      });
+    });
+  });
+
+  function openLightboxForPhoto(src) {
+    if (!src) return;
+    videoWrap.innerHTML = '';
+    imgEl.src = src;
+    imgEl.style.display = 'block';
+    videoWrap.style.display = 'none';
+    lightbox.classList.add('open');
+  }
+
+  function openLightboxForVideo(src) {
+    if (!src) return;
+    imgEl.src = '';
+    imgEl.style.display = 'none';
+    videoWrap.innerHTML = '';
+
+    if (src.endsWith('.mp4')) {
+      const v = document.createElement('video');
+      v.src = src;
+      v.controls = true;
+      v.autoplay = true;
+      videoWrap.appendChild(v);
+    } else {
+      const iframe = document.createElement('iframe');
+      iframe.src = src;
+      iframe.allowFullscreen = true;
+      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+      videoWrap.appendChild(iframe);
+    }
+    videoWrap.style.display = 'block';
+    lightbox.classList.add('open');
+  }
+
+  // Click sur une vignette
+  items.forEach(item => {
+    item.addEventListener('click', () => {
+      const type = item.dataset.type || 'photo';
+      if (type === 'video') {
+        openLightboxForVideo(item.dataset.videoSrc);
+      } else {
+        const img = item.querySelector('img');
+        openLightboxForPhoto(img && img.src);
+      }
+    });
+  });
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    imgEl.src = '';
+    videoWrap.innerHTML = '';
+  }
+
+  closeBtn.addEventListener('click', closeLightbox);
+  backdrop.addEventListener('click', closeLightbox);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && lightbox.classList.contains('open')) {
+      closeLightbox();
+    }
+  });
+})();
