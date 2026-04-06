@@ -476,54 +476,7 @@ hr.footer-sep{border:0;height:1px;background:#000;margin:0;}
 
         <!-- Grille de vignettes -->
         <div class="mt-10">
-            <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
-                
-                <figure class="overflow-hidden rounded-lg shadow-lg bg-white cursor-pointer">
-                    <img src="images/regate%201.jpg"
-                         alt="Régate 1"
-                         class="w-full h-48 object-cover transform hover:scale-105 transition-transform duration-300">
-                    <figcaption class="px-3 py-2 text-sm text-center text-gray-700">
-                        Régate 1
-                    </figcaption>
-                </figure>
-
-                <figure class="overflow-hidden rounded-lg shadow-lg bg-white cursor-pointer">
-                    <img src="images/regate%202.jpg"
-                         alt="Régate 2"
-                         class="w-full h-48 object-cover transform hover:scale-105 transition-transform duration-300">
-                    <figcaption class="px-3 py-2 text-sm text-center text-gray-700">
-                        Régate 2
-                    </figcaption>
-                </figure>
-
-                <figure class="overflow-hidden rounded-lg shadow-lg bg-white cursor-pointer">
-                    <img src="images/regate%203.jpg"
-                         alt="Régate 3"
-                         class="w-full h-48 object-cover transform hover:scale-105 transition-transform duration-300">
-                    <figcaption class="px-3 py-2 text-sm text-center text-gray-700">
-                        Régate 3
-                    </figcaption>
-                </figure>
-
-                <figure class="overflow-hidden rounded-lg shadow-lg bg-white cursor-pointer">
-                    <img src="images/regate%204.jpg"
-                         alt="Régate 4"
-                         class="w-full h-48 object-cover transform hover:scale-105 transition-transform duration-300">
-                    <figcaption class="px-3 py-2 text-sm text-center text-gray-700">
-                        Régate 4
-                    </figcaption>
-                </figure>
-
-                <figure class="overflow-hidden rounded-lg shadow-lg bg-white cursor-pointer">
-                    <img src="images/regate%205.jpg"
-                         alt="Régate 5"
-                         class="w-full h-48 object-cover transform hover:scale-105 transition-transform duration-300">
-                    <figcaption class="px-3 py-2 text-sm text-center text-gray-700">
-                        Régate 5
-                    </figcaption>
-                </figure>
-
-            </div>
+            <div id="publicGalleryGrid" class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5"></div>
         </div>
     </div>
 
@@ -967,63 +920,120 @@ document.addEventListener('DOMContentLoaded', ()=>{
 })();
 </script>
 <script>
-// Lightbox / carrousel pour la galerie
+// Galerie publique Supabase + lightbox
 (function () {
-    const figures = Array.from(document.querySelectorAll('#galerie figure'));
-    const lightbox = document.getElementById('gallery-lightbox');
-    const img      = document.getElementById('gallery-lightbox-img');
-    const caption  = document.getElementById('gallery-lightbox-caption');
-    if (!figures.length || !lightbox || !img || !caption) return;
+    const SUPABASE_URL = 'https://yoyulkqsyqqyxwcuafic.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_S6mlyqj3uDRd9xLi7h5STg_OFlmMI90';
 
-    const btnPrev  = lightbox.querySelector('[data-gallery-prev]');
-    const btnNext  = lightbox.querySelector('[data-gallery-next]');
+    const galleryGrid = document.getElementById('publicGalleryGrid');
+    const lightbox = document.getElementById('gallery-lightbox');
+    const img = document.getElementById('gallery-lightbox-img');
+    const caption = document.getElementById('gallery-lightbox-caption');
+
+    if (!galleryGrid || !lightbox || !img || !caption) return;
+
+    const btnPrev = lightbox.querySelector('[data-gallery-prev]');
+    const btnNext = lightbox.querySelector('[data-gallery-next]');
     const closeEls = lightbox.querySelectorAll('[data-gallery-close]');
 
+    let figures = [];
     let index = 0;
 
-    function show(i) {
-        index = (i + figures.length) % figures.length;
-        const fig   = figures[index];
-        const thumb = fig.querySelector('img');
-        const cap   = fig.querySelector('figcaption');
+    function bindLightbox() {
+        figures = Array.from(document.querySelectorAll('#galerie figure'));
+        if (!figures.length) return;
 
-        img.src = thumb ? thumb.src : '';
-        img.alt = thumb ? thumb.alt : '';
-        caption.textContent = cap ? cap.textContent : '';
+        function show(i) {
+            index = (i + figures.length) % figures.length;
+            const fig = figures[index];
+            const thumb = fig.querySelector('img');
+            const cap = fig.querySelector('figcaption');
 
-        lightbox.classList.remove('hidden');
+            img.src = thumb ? thumb.src : '';
+            img.alt = thumb ? thumb.alt : '';
+            caption.textContent = cap ? cap.textContent : '';
+            lightbox.classList.remove('hidden');
+        }
+
+        function close() {
+            lightbox.classList.add('hidden');
+        }
+
+        function next() {
+            show(index + 1);
+        }
+
+        function prev() {
+            show(index - 1);
+        }
+
+        figures.forEach((fig, i) => {
+            fig.style.cursor = 'pointer';
+            fig.onclick = () => show(i);
+        });
+
+        if (btnNext) btnNext.onclick = (e) => { e.stopPropagation(); next(); };
+        if (btnPrev) btnPrev.onclick = (e) => { e.stopPropagation(); prev(); };
+        closeEls.forEach(el => {
+            el.onclick = (e) => { e.stopPropagation(); close(); };
+        });
+
+        document.onkeydown = (e) => {
+            if (lightbox.classList.contains('hidden')) return;
+            if (e.key === 'Escape') close();
+            if (e.key === 'ArrowRight') next();
+            if (e.key === 'ArrowLeft') prev();
+        };
     }
 
-    function close() {
-        lightbox.classList.add('hidden');
+    async function loadPublicGallery() {
+        galleryGrid.innerHTML = '<p class="text-white text-center col-span-full">Chargement...</p>';
+
+        try {
+            const res = await fetch(`${SUPABASE_URL}/rest/v1/galerie?select=*&order=created_at.desc`, {
+                headers: {
+                    apikey: SUPABASE_KEY,
+                    Authorization: `Bearer ${SUPABASE_KEY}`
+                }
+            });
+
+            if (!res.ok) {
+                throw new Error('Erreur chargement galerie');
+            }
+
+            const items = await res.json();
+            galleryGrid.innerHTML = '';
+
+            const photos = (items || []).filter(item => item.type !== 'video');
+
+            if (!photos.length) {
+                galleryGrid.innerHTML = '<p class="text-white text-center col-span-full">Aucune photo pour le moment.</p>';
+                return;
+            }
+
+            photos.forEach(item => {
+                const figure = document.createElement('figure');
+                figure.className = 'overflow-hidden rounded-lg shadow-lg bg-white cursor-pointer';
+
+                figure.innerHTML = `
+                    <img src="${item.url_photo}"
+                         alt="${item.titre || 'Photo galerie'}"
+                         class="w-full h-48 object-cover transform hover:scale-105 transition-transform duration-300">
+                    <figcaption class="px-3 py-2 text-sm text-center text-gray-700">
+                        ${item.titre || 'Sans titre'}
+                    </figcaption>
+                `;
+
+                galleryGrid.appendChild(figure);
+            });
+
+            bindLightbox();
+        } catch (e) {
+            galleryGrid.innerHTML = '<p class="text-white text-center col-span-full">Erreur de chargement de la galerie.</p>';
+        }
     }
 
-    function next() {
-        show(index + 1);
-    }
-
-    function prev() {
-        show(index - 1);
-    }
-
-    // clic sur les vignettes
-    figures.forEach((fig, i) => {
-        fig.style.cursor = 'pointer';
-        fig.addEventListener('click', () => show(i));
-    });
-
-    // boutons
-    btnNext && btnNext.addEventListener('click', (e) => { e.stopPropagation(); next(); });
-    btnPrev && btnPrev.addEventListener('click', (e) => { e.stopPropagation(); prev(); });
-    closeEls.forEach(el => el.addEventListener('click', (e) => { e.stopPropagation(); close(); }));
-
-    // clavier : ESC / flèches
-    document.addEventListener('keydown', (e) => {
-        if (lightbox.classList.contains('hidden')) return;
-        if (e.key === 'Escape')      close();
-        if (e.key === 'ArrowRight')  next();
-        if (e.key === 'ArrowLeft')   prev();
-    });
+    loadPublicGallery();
 })();
 </script>
 
