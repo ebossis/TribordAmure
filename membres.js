@@ -15,7 +15,8 @@ async function supabase(method, table, body = null, id = null) {
         body: body ? JSON.stringify(body) : null
     });
     if (!res.ok) throw new Error(await res.text());
-    return method === 'DELETE' ? null : res.json();
+    if (method === "DELETE" || method === "PATCH") return null;
+    return res.json();
 }
 
 // ===== Éléments DOM =====
