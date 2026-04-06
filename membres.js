@@ -82,7 +82,7 @@ btnNouvel && btnNouvel.addEventListener('click', () => {
     editingId = null;
     modalTitle.textContent = 'Nouvel adhérent';
     formMembre.reset();
-    modal.classList.remove('hidden');
+    modal.style.display = 'flex';
 });
 
 // ===== Ouvrir modal édition =====
@@ -95,12 +95,12 @@ function openEdit(id) {
     document.getElementById('inputEmail').value = m.email || '';
     document.getElementById('inputDate').value = m.date_adhesion || '';
     document.getElementById('inputStatut').value = m.statut || 'À jour';
-    modal.classList.remove('hidden');
+    modal.style.display = 'flex';
 }
 
 // ===== Fermer modal =====
 btnAnnuler && btnAnnuler.addEventListener('click', () => {
-    modal.classList.add('hidden');
+    modal.style.display = 'none';
 });
 
 // ===== Sauvegarder =====
@@ -118,7 +118,7 @@ formMembre && formMembre.addEventListener('submit', async (e) => {
         } else {
             await supabase('POST', 'membres', data);
         }
-        modal.classList.add('hidden');
+        modal.style.display = 'none';
         await loadMembres();
     } catch (e) {
         alert('Erreur lors de la sauvegarde : ' + e.message);
