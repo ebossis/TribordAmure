@@ -89,7 +89,10 @@ hiddenInput.addEventListener('change', async function () {
                 body: file
             }
         );
-        if (!uploadRes.ok) throw new Error('Erreur upload Storage');
+        const errorText = await uploadRes.text();
+if (!uploadRes.ok) {
+    throw new Error("Erreur upload Storage : " + errorText);
+}
 
         // 2. URL publique
         const url_photo = `${SUPABASE_URL}/storage/v1/object/public/galerie/${filePath}`;
