@@ -288,14 +288,25 @@ hr.footer-sep{border:0;height:1px;background:#000;margin:0;}
                         <li><a href="#accueil" class="nav-link font-medium text-gray-700 hover:text-accent transition-colors active">Accueil</a></li>
                         <li><a href="#association" class="nav-link font-medium text-gray-700 hover:text-accent transition-colors">L'association</a></li>
                         <li><a href="#regates" class="nav-link font-medium text-gray-700 hover:text-accent transition-colors">Régates</a></li>
+                        <li><a href="#galerie" class="nav-link font-medium text-gray-700 hover:text-accent transition-colors">Galerie</a></li>
                         <li><a href="#ecole" class="nav-link font-medium text-gray-700 hover:text-accent transition-colors">Découverte de la voile</a></li>
                         <li><a href="#contact" class="nav-link font-medium text-gray-700 hover:text-accent transition-colors">Contact</a></li>
                     </ul>
                 </nav>
                 
-                <button class="md:hidden text-gray-700">
+                <button id="menuToggle" class="md:hidden text-gray-700" aria-controls="mobileMenu" aria-expanded="false" aria-label="Ouvrir le menu">
                     <i class="fas fa-bars text-2xl"></i>
                 </button>
+                <nav id="mobileMenu" class="md:hidden fixed top-16 inset-x-0 bg-white border-t border-gray-200 shadow-lg hidden">
+                    <ul class="flex flex-col p-4 space-y-3">
+                        <li><a href="#accueil" class="nav-link block px-2 py-2 text-gray-700 hover:text-accent">Accueil</a></li>
+                        <li><a href="#association" class="nav-link block px-2 py-2 text-gray-700 hover:text-accent">L'association</a></li>
+                        <li><a href="#regates" class="nav-link block px-2 py-2 text-gray-700 hover:text-accent">Régates</a></li>
+                        <li><a href="#galerie" class="nav-link block px-2 py-2 text-gray-700 hover:text-accent">Galerie</a></li>
+                        <li><a href="#ecole" class="nav-link block px-2 py-2 text-gray-700 hover:text-accent">Découverte de la voile</a></li>
+                        <li><a href="#contact" class="nav-link block px-2 py-2 text-gray-700 hover:text-accent">Contact</a></li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </header>
@@ -439,7 +450,7 @@ hr.footer-sep{border:0;height:1px;background:#000;margin:0;}
                                 <i class="fas fa-calendar-alt mr-2"></i>
                                 <span>25 octobre 2025</span>
                             </div>
-                            <!--<a href="#contact" class="text-accent font-semibold hover:underline">S'inscrire</a>-->
+                            <a href="#contact" class="text-accent font-semibold hover:underline">S'inscrire</a>
                         </div>
                     </div>
                 </div>
@@ -452,7 +463,33 @@ hr.footer-sep{border:0;height:1px;background:#000;margin:0;}
 <hr class="section-sep">
 
         <!-- Sailing School Section -->
-        <section id="ecole" class="py-16 bg-white has-bg" style="--bg: url('images/background2.png');">
+        
+        <section id="galerie" class="py-16 bg-white has-bg" style="--bg: url('images/background5.png');">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-heading font-bold text-primary mb-4">Galerie</h2>
+                    <div class="w-24 h-1 bg-accent mx-auto"></div>
+                    <p class="mt-4 text-gray-700">Découvrez nos photos : entraînements, régates et souvenirs sur le lagon.</p>
+                </div>
+                <div class="album-embed rounded-lg shadow-lg overflow-hidden bg-white">
+                    <iframe
+                        src="https://photos.tribord-amure.org/index.php?/category/4"
+                        title="Album Piwigo"
+                        loading="lazy"
+                        referrerpolicy="no-referrer"
+                        credentialless
+                        style="width:100%;min-height:70vh;border:0;overflow:auto">
+                    </iframe>
+                </div>
+                <p class="cookie-note">
+                    Si la galerie ne s’affiche pas ou si un message « cookies bloqués » apparaît, ouvrez l’album en plein écran :
+                    <a href="https://photos.tribord-amure.org/index.php?/category/4" target="_blank" rel="noopener" class="text-blue-700 underline font-semibold">Voir l’album complet</a>.
+                </p>
+            </div>
+        </section>
+        <hr class="section-sep">
+    
+<section id="ecole" class="py-16 bg-white has-bg" style="--bg: url('images/background2.png');">
             <div class="container mx-auto px-4">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl font-heading font-bold text-primary mb-4">Découverte de la voile</h2>
@@ -536,6 +573,7 @@ hr.footer-sep{border:0;height:1px;background:#000;margin:0;}
                                 <div>
                                     <h4 class="font-semibold">Email</h4>
                                     <p class="text-gray-600">contact@tribord-amure.org</p>
+                                    <p class="text-gray-600">tribord.amure@hotmail.fr</p>
                                 </div>
                             </div>
                             
@@ -642,13 +680,15 @@ hr.footer-sep{border:0;height:1px;background:#000;margin:0;}
             
             <div class="border-t border-blue-800 mt-12 pt-8 text-sm text-center">
                 <p>&copy; Association Tribord Amure - Tous droits réservés</p>
-                <div class="mt-2">
-                    <a href="#" class="hover:text-accent transition-colors mx-2">Mentions légales</a>
-                    <a href="#" class="hover:text-accent transition-colors mx-2">Politique de confidentialité</a>
-                    <a href="#" class="hover:text-accent transition-colors mx-2">CGU</a>
-                </div>
-            </div>
-        </div>
+              <div class="mt-2">
+    <a href="#" class="hover:text-accent transition-colors mx-2">Mentions légales</a>
+    <a href="#" class="hover:text-accent transition-colors mx-2">Politique de confidentialité</a>
+    <a href="#" class="hover:text-accent transition-colors mx-2">CGU</a>
+    <span class="mx-2">|</span>
+    <a href="login.html" class="hover:text-accent font-bold transition-colors mx-2">
+        <i class="fas fa-lock mr-1"></i>Espace Bureau
+    </a>
+</div>
     </footer>
 
     
@@ -825,6 +865,26 @@ document.addEventListener('DOMContentLoaded', ()=>{
   const topFor=el=>el.getBoundingClientRect().top+window.scrollY-(header?header.offsetHeight:0)-8;
   const animateTo=y=>{const s=window.scrollY,d=y-s,a=performance.now();const step=n=>{const t=Math.min(1,(n-a)/duration);window.scrollTo(0,s+d*ease(t));if(t<1)requestAnimationFrame(step)};requestAnimationFrame(step)};
   document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const id=a.getAttribute('href');if(!id||id==='#')return;const el=document.querySelector(id);if(!el)return;e.preventDefault();animateTo(topFor(el));}));
+})();
+</script>
+
+
+<script>
+// --- Mobile menu (hamburger) toggle ---
+(function(){
+  const btn = document.getElementById('menuToggle');
+  const menu = document.getElementById('mobileMenu');
+  if (!btn || !menu) return;
+  function toggle(){
+    const willOpen = menu.classList.contains('hidden');
+    menu.classList.toggle('hidden');
+    btn.setAttribute('aria-expanded', String(willOpen));
+    document.body.classList.toggle('overflow-hidden', willOpen);
+  }
+  btn.addEventListener('click', toggle);
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', ()=>{
+    if (!menu.classList.contains('hidden')) toggle();
+  }));
 })();
 </script>
 

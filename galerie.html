@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion Galerie - Tribord Amure</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="galerie.css">
+</head>
+<body>
+    <div class="admin-wrapper">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <img src="images/Logo.png" alt="Logo" class="admin-logo">
+                <h2>Capitaine Steve</h2>
+            </div>
+            <ul class="nav-links">
+                <li><a href="admin.html"><i class="fas fa-chart-line"></i> Vue d'ensemble</a></li>
+                <li><a href="membres.html"><i class="fas fa-users"></i> Adhérents</a></li>
+                <li><a href="regates.html"><i class="fas fa-calendar-alt"></i> Régates</a></li>
+                <li class="active"><a href="galerie.html"><i class="fas fa-images"></i> Galerie</a></li>
+                <li><a href="parametres.html"><i class="fas fa-cog"></i> Paramètres</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="index.html" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Quitter</a>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <header class="content-header">
+                <div class="header-flex">
+                    <div>
+                        <h1>Gestion de la Galerie</h1>
+                        <p>Ajoutez les exploits de l'association en images et vidéos.</p>
+                    </div>
+                    <input type="file" id="hiddenFileInput" accept="image/*,video/*" style="display:none;">
+                    <button class="btn-add" id="btnAddMedia">
+                        <i class="fas fa-upload"></i> Sélectionner un fichier
+                    </button>
+                </div>
+            </header>
+
+            <section class="gallery-grid" id="galleryGrid">
+                </section>
+        </main>
+    </div>
+    <script src="galerie.js"></script>
+</body>
+</html>

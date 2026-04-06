@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paramètres - Tribord Amure</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="parametres.css">
+</head>
+<body>
+    <div class="admin-wrapper">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <img src="images/Logo.png" alt="Logo" class="admin-logo">
+                <h2 id="displayAdminName">Capitaine Steve</h2>
+            </div>
+            <ul class="nav-links">
+                <li><a href="admin.html"><i class="fas fa-chart-line"></i> Vue d'ensemble</a></li>
+                <li><a href="membres.html"><i class="fas fa-users"></i> Adhérents</a></li>
+                <li><a href="regates.html"><i class="fas fa-calendar-alt"></i> Régates</a></li>
+                <li><a href="galerie.html"><i class="fas fa-images"></i> Galerie</a></li>
+                <li class="active"><a href="parametres.html"><i class="fas fa-cog"></i> Paramètres</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="index.html" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Quitter</a>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <header class="content-header">
+                <h1>Paramètres du Bureau</h1>
+                <p>Gérez votre profil et la sécurité de l'accès admin.</p>
+            </header>
+
+            <section class="settings-container">
+                <form id="settingsForm">
+                    <div class="settings-section">
+                        <h3><i class="fas fa-user-circle"></i> Profil de l'administrateur</h3>
+                        <div class="input-group">
+                            <label>Nom affiché</label>
+                            <input type="text" id="adminName" value="Capitaine Steve">
+                        </div>
+                        <div class="input-group">
+                            <label>Email de contact</label>
+                            <input type="email" value="steve@tribord.nc">
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3><i class="fas fa-shield-alt"></i> Sécurité</h3>
+                        <div class="input-group">
+                            <label>Nouveau mot de passe</label>
+                            <input type="password" placeholder="Laisser vide pour ne pas changer">
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3><i class="fas fa-tools"></i> Maintenance</h3>
+                        <div class="toggle-group">
+                            <span>Mode Maintenance (Site hors ligne)</span>
+                            <label class="switch">
+                                <input type="checkbox">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-save">Enregistrer les modifications</button>
+                </form>
+            </section>
+        </main>
+    </div>
+    <script src="parametres.js"></script>
+</body>
+</html>

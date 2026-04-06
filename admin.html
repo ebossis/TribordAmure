@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Tribord Amure</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div class="admin-wrapper">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <img src="images/Logo.png" alt="Logo" class="admin-logo">
+                <h2>Capitaine Steve</h2>
+            </div>
+            <ul class="nav-links">
+                <li class="active"><a href="admin.html"><i class="fas fa-chart-line"></i> Vue d'ensemble</a></li>
+                <li><a href="membres.html"><i class="fas fa-users"></i> Adhérents</a></li>
+                <li><a href="regates.html"><i class="fas fa-calendar-alt"></i> Régates</a></li>
+                <li><a href="galerie.html"><i class="fas fa-images"></i> Galerie</a></li>
+                <li><a href="parametres.html"><i class="fas fa-cog"></i> Paramètres</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="index.html" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Quitter</a>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <header class="content-header">
+                <h1>Tableau de bord de l'association</h1>
+                <p>Bienvenue à bord, voici les dernières activités.</p>
+            </header>
+
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-anchor"></i>
+                    <div class="stat-info">
+                        <h3>42</h3>
+                        <p>Membres actifs</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-trophy"></i>
+                    <div class="stat-info">
+                        <h3>3</h3>
+                        <p>Régates à venir</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-envelope"></i>
+                    <div class="stat-info">
+                        <h3>12</h3>
+                        <p>Nouveaux messages</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="recent-activity">
+                <h2>Dernières inscriptions</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Date</th>
+                            <th>Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Louis le Distrait</td>
+                            <td>12/01/2026</td>
+                            <td><span class="badge valid">À jour</span></td>
+                        </tr>
+                        <tr>
+                            <td>San de Nouméa</td>
+                            <td>10/01/2026</td>
+                            <td><span class="badge valid">À jour</span></td>
+                        </tr>
+                        <tr>
+                            <td>Un autre marin</td>
+                            <td>05/01/2026</td>
+                            <td><span class="badge pending">En attente</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+    <script src="admin.js"></script>
+</body>
+</html>

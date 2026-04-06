@@ -1,0 +1,72 @@
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.btn-add {
+    background: #f59e0b;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-add:hover { background: #d97706; }
+
+.table-container {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.search-bar {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px 40px 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+
+.search-bar i {
+    position: absolute;
+    right: 15px;
+    top: 12px;
+    color: #999;
+}
+
+.action-btn {
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.action-btn.edit { background: #e0f2fe; color: #0369a1; }
+.action-btn.delete { background: #fee2e2; color: #b91c1c; }
+
+.action-btn:hover { opacity: 0.8; }
+/* Style pour les membres qui n'ont pas payé */
+.badge.expired { 
+    background: #ffedd5; 
+    color: #9a3412; 
+    cursor: pointer;
+}
+
+/* On ajoute un petit effet au survol sur tous les badges pour Steve */
+.badge { 
+    cursor: pointer; 
+    transition: transform 0.2s;
+}
+.badge:hover { transform: scale(1.1); }

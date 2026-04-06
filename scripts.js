@@ -158,37 +158,19 @@ document.addEventListener('DOMContentLoaded', ()=>{
   document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const id=a.getAttribute('href');if(!id||id==='#')return;const el=document.querySelector(id);if(!el)return;e.preventDefault();animateTo(topFor(el));}));
 })();
 
-// ===== Mobile menu (burger) =====
-document.addEventListener('DOMContentLoaded', () => {
-  const menuBtn = document.getElementById('menuBtn');
-  const mobileMenu = document.getElementById('mobileMenu');
-  if (!menuBtn || !mobileMenu) return;
-
-  const firstLink = mobileMenu.querySelector('a');
-  const openMenu = () => {
-    mobileMenu.classList.remove('hidden');
-    document.body.classList.add('overflow-hidden');
-    menuBtn.setAttribute('aria-expanded', 'true');
-    if (firstLink) firstLink.focus();
-  };
-  const closeMenu = () => {
-    mobileMenu.classList.add('hidden');
-    document.body.classList.remove('overflow-hidden');
-    menuBtn.setAttribute('aria-expanded', 'false');
-    menuBtn.focus();
-  };
-
-  menuBtn.addEventListener('click', () => {
-    if (mobileMenu.classList.contains('hidden')) openMenu(); else closeMenu();
-  });
-
-  // Close when clicking backdrop or a link
-  mobileMenu.addEventListener('click', (e) => {
-    if (e.target.dataset.close === 'true' || e.target.tagName === 'A') closeMenu();
-  });
-
-  // Close with Escape
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && !mobileMenu.classList.contains('hidden')) closeMenu();
-  });
-});
+// --- Mobile menu (hamburger) toggle ---
+(function(){
+  const btn = document.getElementById('menuToggle');
+  const menu = document.getElementById('mobileMenu');
+  if (!btn || !menu) return;
+  function toggle(){
+    const willOpen = menu.classList.contains('hidden');
+    menu.classList.toggle('hidden');
+    btn.setAttribute('aria-expanded', String(willOpen));
+    document.body.classList.toggle('overflow-hidden', willOpen);
+  }
+  btn.addEventListener('click', toggle);
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', ()=>{
+    if (!menu.classList.contains('hidden')) toggle();
+  }));
+})();

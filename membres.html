@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Adhérents - Tribord Amure</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="admin.css"> <link rel="stylesheet" href="membres.css">
+</head>
+<body>
+    <div class="admin-wrapper">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <img src="images/Logo.png" alt="Logo" class="admin-logo">
+                <h2>Capitaine Steve</h2>
+            </div>
+            <ul class="nav-links">
+                <li><a href="admin.html"><i class="fas fa-chart-line"></i> Vue d'ensemble</a></li>
+                <li class="active"><a href="membres.html"><i class="fas fa-users"></i> Adhérents</a></li>
+                <li><a href="regates.html"><i class="fas fa-calendar-alt"></i> Régates</a></li>
+                <li><a href="galerie.html"><i class="fas fa-images"></i> Galerie</a></li>
+                <li><a href="parametres.html"><i class="fas fa-cog"></i> Paramètres</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <a href="index.html" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Quitter</a>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <header class="content-header">
+                <div class="header-flex">
+                    <div>
+                        <h1>Annuaire des Adhérents</h1>
+                        <p>Gérez les membres de l'association Tribord Amure.</p>
+                    </div>
+                    <button class="btn-add" id="btnAddMember">
+                        <i class="fas fa-plus"></i> Nouvel Adhérent
+                    </button>
+                </div>
+            </header>
+
+            <section class="table-container">
+                <div class="search-bar">
+                    <input type="text" placeholder="Rechercher un nom...">
+                    <i class="fas fa-search"></i>
+                </div>
+
+                <table id="membersTable">
+                    <thead>
+                        <tr>
+                            <th>Membre</th>
+                            <th>Email</th>
+                            <th>Date d'adhésion</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Steve le Capitaine</strong></td>
+                            <td>steve@tribord.nc</td>
+                            <td>01/01/2016</td>
+                            <td><span class="badge valid">Président</span></td>
+                            <td>
+                                <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Louis le Distrait</td>
+                            <td>louis@perdu.nc</td>
+                            <td>12/01/2026</td>
+                            <td><span class="badge valid">À jour</span></td>
+                            <td>
+                                <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                                <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Erwan le Codeur</td>
+                            <td>erwan@serveur.nc</td>
+                            <td>15/05/2024</td>
+                            <td><span class="badge valid">À jour</span></td>
+                            <td>
+                                <button class="action-btn edit"><i class="fas fa-edit"></i></button>
+                                <button class="action-btn delete"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+    <script src="membres.js"></script>
+</body>
+</html>
