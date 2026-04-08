@@ -1025,4 +1025,11 @@ document.addEventListener('DOMContentLoaded', ()=>{
                 galleryGrid.appendChild(figure);
             });
 
-            bind
+            bindLightbox();
+        } catch (e) {
+            galleryGrid.innerHTML = '<p class="text-white text-center col-span-full">Erreur chargement des photos.</p>';
+            console.error(e);
+        }
+    }
+    loadPublicGallery();
+})();
